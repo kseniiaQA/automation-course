@@ -49,7 +49,6 @@ public class StatusCodeInterceptionTest {
 
     @AfterEach
     void tearDown() {
-        context.close();
         browser.close();
         playwright.close();
     }
