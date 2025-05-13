@@ -1,47 +1,25 @@
-name: Java CI
-
-on:
-  push:
+name: E2E Tests
+on: [push]
 
 jobs:
-  build:
+  playwright:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Java 17
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: temurin
-          java-version: "17"
+          java-version: '17'
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+      - name: Run tests
+        run: mvn test
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils  
-
-      - name: Start virtual display (Xvfb)
-        run: |
-          export DISPLAY=:0
-          nohup Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &
-
-      - name: Run tests with Maven
-        run: |
-          mvn clean test -B
-
-      - name: Upload screenshots and videos artifacts
+      - name: Upload artifacts
+        if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: test-artifacts
+          name: test-results
           path: |
             target/screenshots/
             target/videos/
