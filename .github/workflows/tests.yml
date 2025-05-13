@@ -38,37 +38,10 @@ jobs:
         run: |
           mvn clean test -B
 
-      # Если хотите отдельно запускать e2e тесты с Playwright, добавьте отдельный job:
-  e2e_tests:
-    needs: build
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright/java:v1.40.0-jammy
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Java 17 inside container
-        uses: actions/setup-java@v3
+      - name: Upload screenshots and videos artifacts
+        uses: actions/upload-artifact@v3
         with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Cache Maven dependencies inside container
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Run Playwright tests
-        run: |
-          mvn test
-
-    artifacts:
-      paths:
-        - target/screenshots/
-        - target/videos/
-      when: always
-      expire_in: 7 days
+          name: test-artifacts
+          path: |
+            target/screenshots/
+            target/videos/
