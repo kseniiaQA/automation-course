@@ -23,7 +23,7 @@ public class CartTest {
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
         context = browser.newContext(new Browser.NewContextOptions()
-                .setRecordVideoDir(Paths.get("target/videos/")));
+                .setRecordVideoDir(Paths.get("videos/")));
         page = context.newPage();
     }
 
@@ -50,7 +50,7 @@ public class CartTest {
 
     private Path getTimestampPath(String filename) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        return Paths.get("target/screenshots", timestamp, filename);
+        return Paths.get("screenshots/", timestamp, filename);
     }
 
     @AfterEach

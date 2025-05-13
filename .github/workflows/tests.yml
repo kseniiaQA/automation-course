@@ -43,5 +43,5 @@ jobs:
         with:
           name: test-artifacts
           path: |
-            target/screenshots/
-            target/videos/
+            screenshots/
+            videos/
