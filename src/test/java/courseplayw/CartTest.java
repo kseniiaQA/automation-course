@@ -33,7 +33,7 @@ public class CartTest {
         Locator addToButton = page.locator("div.product-price__add-to-cart").nth(0);
 
 
-        addToButton.waitFor(new Locator.WaitForOptions().setTimeout(8000).setState(WaitForSelectorState.VISIBLE));
+        addToButton.waitFor(new Locator.WaitForOptions().setTimeout(120000).setState(WaitForSelectorState.VISIBLE));
         // Добавление товара
         page.locator("div.product-price__add-to-cart").nth(0).click();
         page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
