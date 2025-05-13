@@ -1,6 +1,7 @@
 package courseplayw;
 
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ public class CartTest {
     void testCartActions() {
         page.navigate("https://www.komus.ru/katalog/khozyajstvennye-tovary/mylo/c/4118/?from=menu-g2-proizvodstvo_i_sklady");
 
+
+        Locator addToButton = page.locator("div.product-price__add-to-cart").nth(0);
+        addToButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         // Добавление товара
         page.locator("div.product-price__add-to-cart").nth(0).click();
         page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
