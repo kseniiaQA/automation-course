@@ -37,11 +37,3 @@ jobs:
       - name: Run tests with Maven
         run: mvn test
 
-      - name: Upload screenshots and videos as artifacts
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-artifacts
-          path: |
-            screenshots/
-            videos/
