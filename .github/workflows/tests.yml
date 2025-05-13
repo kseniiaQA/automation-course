@@ -1,25 +1,47 @@
-name: E2E Tests
-on: [push]
+name: Run Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  playwright:
+  test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Java
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
 
-      - name: Run tests
+      - name: Install dependencies
+        run: |
+          # Установка Node.js (если нужно)
+          # curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+          # sudo apt-get install -y nodejs
+          
+          # Установка Maven (если не установлен)
+          sudo apt-get update
+          sudo apt-get install -y maven
+
+          # Установка зависимостей проекта (если есть package.json)
+          # npm install
+
+      - name: Run tests with Maven
         run: mvn test
 
-      - name: Upload artifacts
+      - name: Upload screenshots and videos as artifacts
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: test-results
+          name: test-artifacts
           path: |
             target/screenshots/
             target/videos/
