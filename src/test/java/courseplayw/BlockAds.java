@@ -23,7 +23,8 @@ public class BlockAds {
     void setUp() {
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
-        context = browser.newContext();
+        context = browser.newContext(new Browser.NewContextOptions()
+                .setRecordVideoDir(Paths.get("videos/")));
         page = context.newPage();
 
     }
@@ -31,10 +32,7 @@ public class BlockAds {
     @Test
     void testCartActions() {
         page.navigate("https://www.komus.ru/katalog/khozyajstvennye-tovary/mylo/c/4118/?from=menu-g2-proizvodstvo_i_sklady");
-        Locator addToButton = page.locator("div.product-price__add-to-cart").nth(0);
 
-
-        addToButton.waitFor(new Locator.WaitForOptions().setTimeout(120000).setState(WaitForSelectorState.VISIBLE));
         // Добавление товара
         page.locator("div.product-price__add-to-cart").nth(0).click();
         page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
