@@ -3,6 +3,9 @@ package base;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+
+import java.nio.file.Paths;
 
 public class BaseTest {
     Playwright playwright;

@@ -1,22 +1,27 @@
 package courseplayw;
 
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.WaitForSelectorState;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Allure;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+@ExtendWith(AllureScreenshotOnFailureExtension.class)
+
 public class BlockAds {
+
     Playwright playwright;
     Browser browser;
     BrowserContext context;
-    Page page;
+   private Page page;
 
 
     @BeforeEach
@@ -27,25 +32,26 @@ public class BlockAds {
                 .setRecordVideoDir(Paths.get("videos/")));
         page = context.newPage();
 
+        AllureScreenshotOnFailureExtension.setPage(page);
     }
-
     @Test
     void testCartActions() {
-        page.navigate("https://www.komus.ru/katalog/khozyajstvennye-tovary/mylo/c/4118/?from=menu-g2-proizvodstvo_i_sklady");
-
-        // Добавление товара
-        page.locator("div.product-price__add-to-cart").nth(0).click();
-        page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
-                .setPath(getTimestampPath("cart_after_add.png")));
+            page.navigate("https://www.komus.ru/katalog/khozyajstvennye-tovary/mylo/c/4118/?from=menu-g2-proizvodstvo_i_sklady");
+            // Добавление товара
+            page.locator("div.product-price__add-to-car").nth(0).click();
+            page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
+                    .setPath(getTimestampPath("cart_after_add.png")));
 
         // Удаление товара
-        page.locator("span.b-icn.b-icn--mini-cart").click();
-        page.locator("div.cart-product-item__remove.gtm-remove-item-fromCart").click();
-        page.locator("a.cart__link.button.button--primary.button--size-m.gtm-empty-cart-to-catalog").click();
+            page.locator("span.b-icn.b-icn--mini-cart").click();
+            page.locator("div.cart-product-item__remove.gtm-remove-item-fromCart").click();
+            page.locator("a.cart__link.button.button--primary.button--size-m.gtm-empty-cart-to-catalog").click();
 
-        page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
-                .setPath(getTimestampPath("cart_after_remove.png")));
-    }
+            page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
+                    .setPath(getTimestampPath("cart_after_remove.png")));
+
+
+        }
 
     private Path getTimestampPath(String filename) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
@@ -91,6 +97,9 @@ public class BlockAds {
         Assertions.assertTrue(loadTimeWithoutBlock > 3000, "Время загрузки страницы с блокировкой рекламы более 3 секунд.");
 
     }
+
+
+
 
     @AfterEach
     void tearDown() {
