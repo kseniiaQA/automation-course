@@ -1,7 +1,6 @@
 name: Java CI
 
-on:
-  push:
+on: [push]
 
 jobs:
   build:
@@ -29,12 +28,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils  
 
-      - name: Start virtual display (Xvfb)
+      - name: Run tests
         run: |
           export DISPLAY=:0
-          nohup Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &
-
-      - name: Run tests with Maven
-        run: |
+          Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
           mvn clean test -B
-
