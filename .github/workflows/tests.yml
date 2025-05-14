@@ -33,6 +33,11 @@ jobs:
           export DISPLAY=:0
           Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
           mvn clean test
-          npx allure open allure-report  
+
+      - name: Upload Allure report artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
 
 
