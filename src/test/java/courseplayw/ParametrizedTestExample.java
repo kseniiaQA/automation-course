@@ -13,7 +13,6 @@ public class ParametrizedTestExample {
     @CsvSource({
             "chromium",
             "firefox",
-            "chromium"
     })
     void testLoginPage(String browserType) {
         // 1. Создаем экземпляр Playwright
@@ -44,7 +43,6 @@ public class ParametrizedTestExample {
     @CsvSource({
             "chromium",
             "firefox",
-            "chromium"
     })
     void testAddRemoveElements(String browserType) {
         // 1. Создаем экземпляр Playwright
