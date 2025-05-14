@@ -37,7 +37,6 @@ jobs:
       # Шаг для генерации Allure отчета после тестов
       - name: Generate Allure report
         run: |
-          # Убедитесь, что у вас есть плагин allure-maven или команда для генерации результатов
           mvn allure:report
 
       # Сохраняем отчет как артефакт для скачивания из интерфейса GitHub Actions
