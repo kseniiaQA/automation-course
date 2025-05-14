@@ -28,8 +28,25 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils  
 
-      - name: Run tests
+      - name: Run tests with Xvfb
         run: |
           export DISPLAY=:0
           Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
-          mvn clean test -B
+          mvn clean test
+
+      # Шаг для генерации Allure отчета после тестов
+      - name: Generate Allure report
+        run: |
+          # Убедитесь, что у вас есть плагин allure-maven или команда для генерации результатов
+          mvn allure:report
+
+      # Сохраняем отчет как артефакт для скачивания из интерфейса GitHub Actions
+      - name: Upload Allure report artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: target/allure-report
+
+      # (Опционально) команда для локального открытия отчета — обычно не используется в CI, но можно добавить как комментарий или инструкцию.
+      # - name: Open Allure report locally (manual step)
+      #   run: npx allure open target/allure-report
