@@ -38,7 +38,7 @@ public class BlockAds {
     void testCartActions() {
             page.navigate("https://www.komus.ru/katalog/khozyajstvennye-tovary/mylo/c/4118/?from=menu-g2-proizvodstvo_i_sklady");
             // Добавление товара
-            page.locator("div.product-price__add-to-car").nth(0).click();
+            page.locator("div.product-price__add-to-cart").nth(0).click();
             page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
                     .setPath(getTimestampPath("cart_after_add.png")));
 
@@ -50,14 +50,12 @@ public class BlockAds {
             page.locator("span.b-icn.b-icn--mini-cart").screenshot(new Locator.ScreenshotOptions()
                     .setPath(getTimestampPath("cart_after_remove.png")));
 
-
         }
 
     private Path getTimestampPath(String filename) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
         return Paths.get("screenshots/", timestamp, filename);
     }
-
 
     @Test
     void testContentWithoutAds() {

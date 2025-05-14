@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","25065","testCartActions()","","Wed May 14 11:03:10 MSK 2025","passed","Wed May 14 11:03:35 MSK 2025","","courseplayw.BlockAds","courseplayw.BlockAds","testCartActions"
