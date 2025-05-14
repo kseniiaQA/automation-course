@@ -22,7 +22,10 @@ public class AllureScreenshotOnFailureExtension implements TestWatcher {
             try {
                 byte[] screenshotBytes = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
                 // Прикрепляем скриншот в Allure
-                Allure.addAttachment("Скриншот при падении теста", "image/png", new ByteArrayInputStream(screenshotBytes), ".png");
+                Allure.addAttachment("Скриншот при падении теста",
+                        "image/png",
+                        new ByteArrayInputStream(screenshotBytes),
+                        ".png");
             } catch (Exception e) {
                 e.printStackTrace();
             }

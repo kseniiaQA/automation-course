@@ -1,2 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","25065","testCartActions()","","Wed May 14 11:03:10 MSK 2025","passed","Wed May 14 11:03:35 MSK 2025","","courseplayw.BlockAds","courseplayw.BlockAds","testCartActions"
+"","27506","testContentWithAds()","","Wed May 14 16:07:17 MSK 2025","passed","Wed May 14 16:07:44 MSK 2025","","courseplayw.BlockAds","courseplayw.BlockAds","testContentWithAds"
+"","20381","testCartActions()","","Wed May 14 16:07:44 MSK 2025","passed","Wed May 14 16:08:04 MSK 2025","","courseplayw.BlockAds","courseplayw.BlockAds","testCartActions"
+"","8877","testExample()","","Wed May 14 16:07:08 MSK 2025","failed","Wed May 14 16:07:16 MSK 2025","","courseplayw.BlockAds","courseplayw.BlockAds","testExample"
+"","2846","testContentWithoutAds()","","Wed May 14 16:08:04 MSK 2025","passed","Wed May 14 16:08:07 MSK 2025","","courseplayw.BlockAds","courseplayw.BlockAds","testContentWithoutAds"
