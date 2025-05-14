@@ -3,11 +3,15 @@ package courseplayw;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -30,13 +34,6 @@ public class BlockAds {
         AllureScreenshotOnFailureExtension.setPage(page);
     }
 
-    @Test
-    void testExample() {
-        // Ваш тест
-        page.navigate("https://example.com");
-        // Искусственно вызываем ошибку для проверки
-        Assertions.assertEquals(1, 2);
-    }
 
     @Test
     void testCartActions() {
