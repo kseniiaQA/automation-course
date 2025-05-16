@@ -36,7 +36,7 @@
 //        S3Client s3Client = S3Client.builder()
 //                .region(Region.of("ru-central1"))
 //                .endpointOverride(URI.create("https://storage.yandexcloud.net"))
-//                .credentialsProvider(() -> AwsBasicCredentials.create("YCAJEpXKLdtjvhb7wfLFBrZ0j", "YCPtqa1AgfZp1ceGQmTDH6A5pfWZo-bso30udeNZ"))
+//                .credentialsProvider(() -> AwsBasicCredentials.create("", ""))
 //                .build();
 //
 //        String content = s3Client.getObjectAsBytes(GetObjectRequest.builder()
