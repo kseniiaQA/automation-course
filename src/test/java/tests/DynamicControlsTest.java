@@ -12,8 +12,6 @@ public class DynamicControlsTest {
     private TestContext context;
     private DynamicControlsPage controlsPage;
 
-
-
     @BeforeEach
     public void setup() {
         context = new TestContext();
