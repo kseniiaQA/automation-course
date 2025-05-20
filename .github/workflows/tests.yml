@@ -47,9 +47,10 @@ jobs:
             id SERIAL PRIMARY KEY,
             username VARCHAR(50),
             email VARCHAR(100)
-          ); EOF
+          );
+  EOF
 
-         - name: Run tests
+- name: Run tests
   env:
     DISPLAY: :0
     DB_URL: jdbc:postgresql://localhost:5432/test_db
