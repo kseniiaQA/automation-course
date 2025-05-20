@@ -6,6 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: secret
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -29,7 +40,17 @@ jobs:
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils  
 
       - name: Run tests
+        env:
+          DISPLAY: :0
+          DB_URL: jdbc:postgresql://localhost:5432/test_db
+          DB_USER: admin
+          DB_PASSWORD: secret
         run: |
-          export DISPLAY=:0
+          # Запускаем Xvfb для GUI, если нужно (оставьте, если требуется)
           Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
-          mvn clean test -B
+          
+          # Запускаем тесты с переменными окружения для подключения к БД
+          mvn clean test -B \
+            -Ddb.url=$DB_URL \
+            -Ddb.user=$DB_USER \
+            -Ddb.password=$DB_PASSWORD
