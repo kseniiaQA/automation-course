@@ -48,20 +48,20 @@ jobs:
             username VARCHAR(50),
             email VARCHAR(100)
           );
-  EOF
+         EOF
+      - name: Run tests
+    env:
+      DISPLAY: :0
+      DB_URL: jdbc:postgresql://localhost:5432/test_db
+      DB_USER: admin
+      DB_PASSWORD: secret
+    run: |
+      # Запускаем Xvfb для GUI, если нужно (оставьте, если требуется)
+      Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
 
-- name: Run tests
-  env:
-    DISPLAY: :0
-    DB_URL: jdbc:postgresql://localhost:5432/test_db
-    DB_USER: admin
-    DB_PASSWORD: secret
-  run: |
-    # Запускаем Xvfb для GUI, если нужно (оставьте, если требуется)
-    Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
-    
-    # Запускаем тесты с переменными окружения для подключения к БД и предполагаемой схемой созданной ранее.
-    mvn clean test -B \
-      -Ddb.url=$DB_URL \
-      -Ddb.user=$DB_USER \
-      -Ddb.password=$DB_PASSWORD
+      # Запускаем тесты с переменными окружения для подключения к БД и предполагаемой схемой созданной ранее.
+      mvn clean test -B \
+        -Ddb.url=$DB_URL \
+        -Ddb.user=$DB_USER \
+        -Ddb.password=$DB_PASSWORD
+
