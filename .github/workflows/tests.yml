@@ -39,18 +39,28 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils  
 
-      - name: Run tests
-        env:
-          DISPLAY: :0
-          DB_URL: jdbc:postgresql://localhost:5432/test_db
-          DB_USER: admin
-          DB_PASSWORD: secret
+      - name: Initialize database schema
         run: |
-          # Запускаем Xvfb для GUI, если нужно (оставьте, если требуется)
-          Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
-          
-          # Запускаем тесты с переменными окружения для подключения к БД
-          mvn clean test -B \
-            -Ddb.url=$DB_URL \
-            -Ddb.user=$DB_USER \
-            -Ddb.password=$DB_PASSWORD
+          # Подключение к базе и создание таблицы users (пример)
+          PGPASSWORD=secret psql -h localhost -U admin -d test_db <<EOF
+          CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(50),
+            email VARCHAR(100)
+          ); EOF
+
+         - name: Run tests
+  env:
+    DISPLAY: :0
+    DB_URL: jdbc:postgresql://localhost:5432/test_db
+    DB_USER: admin
+    DB_PASSWORD: secret
+  run: |
+    # Запускаем Xvfb для GUI, если нужно (оставьте, если требуется)
+    Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
+    
+    # Запускаем тесты с переменными окружения для подключения к БД и предполагаемой схемой созданной ранее.
+    mvn clean test -B \
+      -Ddb.url=$DB_URL \
+      -Ddb.user=$DB_USER \
+      -Ddb.password=$DB_PASSWORD
