@@ -1,6 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 /allure-results
+**/src/test/resources
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea
