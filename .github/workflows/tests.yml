@@ -38,9 +38,9 @@ jobs:
           # Подключение к базе и создание таблицы users (пример)
           PGPASSWORD=secret psql -h localhost -U admin -d test_db <<EOF
           CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            username VARCHAR(50),
-            email VARCHAR(100)
+          id SERIAL PRIMARY KEY,
+          username VARCHAR(50) UNIQUE NOT NULL,
+          password VARCHAR(50) NOT NULL
           );
                 EOF
       - name: Run tests
