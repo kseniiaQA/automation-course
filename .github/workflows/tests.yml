@@ -1,27 +1,22 @@
-name: Java CI
-on:
-  - push
+name: Java Tests
+
+on: [push]
+
 jobs:
-  build:
+  run-common-tests:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: test_db
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: secret
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s
-          --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
+
+      # Установка Java 17
       - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: "17"
+
+      # Кеширование зависимостей Maven
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -29,35 +24,15 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      # Установка системных зависимостей
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils
-      - name: Initialize database schema
-        run: |
-          # Подключение к базе и создание таблицы users (пример)
-          PGPASSWORD=secret psql -h localhost -U admin -d test_db <<EOF
-          CREATE TABLE IF NOT EXISTS users (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR(50) UNIQUE NOT NULL,
-          password VARCHAR(50) NOT NULL
-          );
-                EOF
+
       - name: Run tests
-    env:
-      DISPLAY: :0
-      DB_URL: jdbc:postgresql://localhost:5432/test_db
-      DB_USER: admin
-      DB_PASSWORD: secret
-    run: >
-      # Запускаем Xvfb для GUI, если нужно (оставьте, если требуется)
-
-      Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &  
-
-
-      # Запускаем тесты с переменными окружения для подключения к БД и предполагаемой схемой созданной ранее.
-
-      mvn clean test -B \
-        -Ddb.url=$DB_URL \
-        -Ddb.user=$DB_USER \
-        -Ddb.password=$DB_PASSWORD
+        run: |
+          export DISPLAY=:0
+          Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &
+          mvn test -Dtest=DragDropTest

@@ -1,13 +1,7 @@
 version: '3.8'
-
 services:
-  chrome:
-    build: .
-    environment:
-      - HEADLESS=true # Запуск браузера в фоновом режиме
-    networks:
-      - test-network
-
-networks:
-  test-network:
-    driver: bridge
+        playwright:
+            build: .
+            environment:
+              - BASE_URL=https://the-internet.herokuapp.com
+            command: mvn test -Dtest=DragDropTest
