@@ -15,7 +15,6 @@ import static org.mockito.Mockito.*;
 public class OptimizedCartTest extends BaseTest {
     static ProductApi productApi;
 
-
     @BeforeAll
     public void setUp() {
         BrowserContext context = browser.newContext(new Browser.NewContextOptions()

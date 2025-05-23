@@ -1,9 +1,9 @@
-name: Java Tests
+name: Java Playwright Tests
 
 on: [push]
 
 jobs:
-  run-common-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,14 +25,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Установка системных зависимостей
+      # Установка системных зависимостей для Playwright
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils
 
+      # Запуск Xvfb и тестов
       - name: Run tests
         run: |
           export DISPLAY=:0
           Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &
-          mvn test -Dtest=OptimizedCartTest
+           mvn test -Dtest=OptimizedCartTest
+
+      # Проверка содержимого папки с видео
+      - name: Check video directory
+        run: |
+          echo "Contents of videos directory:"
+          ls -la videos/
+
+      # Загрузка видео как артефактов
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: videos
+          path: videos/
