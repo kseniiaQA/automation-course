@@ -32,11 +32,24 @@ jobs:
           sudo apt-get install -y xvfb libgbm-dev x11-xkb-utils
 
       # Запуск Xvfb и тестов
+      - name: Start virtual display
+        run: |
+          Xvfb :99 -screen 0 1280x720x24 &
+          export DISPLAY=:99
+          # Запускаем ffmpeg для записи экрана в WebM
+          nohup ffmpeg -f x11grab -video_size 1280x720 -i :99.0+0,0 -r 25 -c:v libvpx -b:v 1M -pix_fmt yuv420p output.webm > ffmpeg.log 2>&1 &
+          echo $! > ffmpeg_pid.txt
+
       - name: Run tests
         run: |
-          export DISPLAY=:0
-          ffmpeg :0 -screen 0 1280x720x24 >/dev/null 2>&1 &
           mvn test -Dtest=CheckboxTest
+
+      - name: Stop recording and save video
+        run: |
+          # Остановить ffmpeg по PID
+          kill $(cat ffmpeg_pid.txt)
+          # Подождать завершения процесса
+          sleep 2
 
       # Проверка содержимого папки с видео
       - name: Check video directory
