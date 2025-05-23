@@ -41,7 +41,7 @@ public class CompareScreenshots {
 
     @AfterEach
     void tearDown() {
-        AllureScreenshotOnFailureExtension.setPage(page);
+
         context.close();
         browser.close();
         playwright.close();

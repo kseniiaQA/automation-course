@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@ExtendWith(AllureScreenshotOnFailureExtension.class)
 public class BlockAds {
 
     Playwright playwright;
@@ -31,7 +30,6 @@ public class BlockAds {
                 .setRecordVideoDir(Paths.get("videos/")));
         page = context.newPage();
 
-        AllureScreenshotOnFailureExtension.setPage(page);
     }
 
 
@@ -97,7 +95,6 @@ public class BlockAds {
 
     @AfterEach
     void tearDown() {
-        AllureScreenshotOnFailureExtension.setPage(page);
         context.close();
         browser.close();
         playwright.close();

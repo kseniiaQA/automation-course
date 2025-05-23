@@ -1,6 +1,6 @@
 //package courseplayw;
 //
-//import base.BaseTest;
+//import courseplayw.BaseTest;
 //import org.junit.jupiter.api.Assertions;
 //import org.junit.jupiter.api.Test;
 //

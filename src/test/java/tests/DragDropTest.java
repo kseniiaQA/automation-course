@@ -1,8 +1,8 @@
 package tests;
 
+import courseplayw.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pages.BaseTest;
 import pages.DragDropPage;
 
 
@@ -14,7 +14,6 @@ public class DragDropTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        super.setUp();
         dragDropPage = new DragDropPage(page);
     }
 
