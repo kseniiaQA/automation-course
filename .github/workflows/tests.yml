@@ -47,7 +47,7 @@ jobs:
       # Загрузка видео как артефактов
       - name: Upload videos
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: videos
           path: videos/
