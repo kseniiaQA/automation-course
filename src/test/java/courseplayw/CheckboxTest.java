@@ -5,26 +5,23 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-public class CheckboxTest {
-    private Playwright playwright;
-    private Browser browser;
-    private BrowserContext context;
-    private Page page;
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class CheckboxTest extends BaseTest {
 
-    @BeforeEach
-    @Step("Инициализация браузера и контекста")
-    void setUp() {
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
-        context = browser.newContext();
-        page = context.newPage();
+    @BeforeAll
+    public void setUp() {
+        BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoSize(1280, 720));
+        Page page = context.newPage();
     }
 
     @Test
@@ -65,11 +62,8 @@ public class CheckboxTest {
         assertThat(secondCheckbox.isChecked()).isFalse();
     }
 
-    @AfterEach
-    @Step("Закрытие ресурсов")
+    @AfterAll
     void tearDown() {
-        context.close();
         browser.close();
-        playwright.close();
     }
 }
