@@ -4,11 +4,15 @@ import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.nio.file.Paths;
+
 @ExtendWith(CustomReportExtension.class)
 public class BaseTest {
     protected static Playwright playwright;
     protected static Browser browser;
     protected Page page;
+
+
 
     @BeforeAll
     static void setup() {
@@ -31,6 +35,7 @@ public class BaseTest {
                 "test-report.html"
         );
     }
+
 
     public Page getPage() {
         return page;

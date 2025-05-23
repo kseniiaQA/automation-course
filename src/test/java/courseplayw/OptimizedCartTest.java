@@ -6,14 +6,22 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OptimizedCartTest extends BaseTest {
     static ProductApi productApi;
+
+
     @BeforeAll
     public void setUp() {
+        BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoSize(1280, 720));
+        Page page = context.newPage();
         // Инициализируем мок API
         productApi = mock(ProductApi.class);
         when(productApi.getProduct(1, "Product 1", 2)).thenReturn(String.valueOf(new Product("Product 1")));

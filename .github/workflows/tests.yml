@@ -35,4 +35,4 @@ jobs:
         run: |
           export DISPLAY=:0
           Xvfb :0 -screen 0 1280x720x24 >/dev/null 2>&1 &
-          mvn test -Dtest=DragDropTest
+          mvn test -Dtest=OptimizedCartTest
